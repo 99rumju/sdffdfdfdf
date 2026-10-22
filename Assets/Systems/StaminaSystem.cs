@@ -23,24 +23,28 @@ public class StaminaSystem : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
-    //깨어날때 다른 인스턴스가 이미 있다면 생성되지 않음
+    //깨어날때 다른 인스턴스가 이미 있다면 본인을 파괴시킴
 
     void Start()
     {
-        StartCoroutine(RecoverStamina());
+        StartCoroutine(RecoverStamina()); //아래쪽의 RecoverStamina 가져와서 사용
     }
 
-    IEnumerator RecoverStamina()
+    IEnumerator RecoverStamina() //RecoverStamina 만듦
     {
-        while (stamina < staminaMax)
+        while (true)
         {
             yield return new WaitForSeconds(1f);
-            stamina += 1;
-            Debug.Log("현재 스태미너: " + stamina);
+
+            if (stamina < staminaMax)
+            {
+                stamina += 1;
+                Debug.Log("현재 스태미너: " + stamina);
+            }
         }
     }
 
-    public bool UseStamina(int amount)
+    public bool UseStamina(int amount) //스태미너 사용 확인
     {
         if (stamina < amount)
         {
